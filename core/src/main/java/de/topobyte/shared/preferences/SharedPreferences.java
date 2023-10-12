@@ -17,13 +17,29 @@
 
 package de.topobyte.shared.preferences;
 
-
+import java.util.prefs.BackingStoreException;
 import java.util.prefs.Preferences;
 
 public class SharedPreferences
 {
 
 	public static final String UI_SCALE = "uiScale";
+
+	public static boolean isUIScalePresent()
+	{
+		Preferences node = Preferences
+				.userNodeForPackage(SharedPreferences.class);
+		try {
+			for (String key : node.keys()) {
+				if (key.equals(UI_SCALE)) {
+					return true;
+				}
+			}
+		} catch (BackingStoreException e) {
+			return false;
+		}
+		return false;
+	}
 
 	public static double getUIScale()
 	{
